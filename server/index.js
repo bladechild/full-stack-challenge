@@ -1,4 +1,6 @@
-const { listEmployees, addEmployee, retrieveEmployee, updateEmployee, deleteEmployee } = require('./db');
+const { listEmployees, addEmployee, retrieveEmployee,
+    updateEmployee, deleteEmployee, addReview,
+    updateReview, getAllReviews, getReviews } = require('./db');
 const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
@@ -48,10 +50,42 @@ app.delete('/deleteEmployee', function (req, res) {
         if (error) res.send(error);
         else res.send(response)
     });
-})
+});
+
+app.post('/addReview', (req, res) => {
+    const { fromId, toId, note } = req.body;
+    addReview(fromId, toId, note, (error, response) => {
+        if (error) res.send(error);
+        else res.send(response);
+    });
+});
+
+app.post('/updateReview', (req, res) => {
+    const { fromId, toId, note } = req.body;
+    updateReview(fromId, toId, note, (error, response) => {
+        if (error) res.send(error);
+        else res.send(response);
+    });
+});
+
+app.get('/getAllReviews', (req, res) => {
+    getAllReviews((error, response) => {
+        if (error) res.send(error);
+        else res.send(response);
+    });
+});
+
+
+app.get('/getReviews', (req, res) => {
+    const { fromId } = req.query;
+    getReviews(fromId, (error, response) => {
+        if (error) res.send(error);
+        else res.send(response);
+    });
+});
 app.listen(port, function (error) {
     if (error) console.log(error);
     var host = hostname;
-    console.log("应用实例，访问地址为 http://%s:%s", host, port)
+    console.log("http://%s:%s", host, port)
 
 })

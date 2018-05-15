@@ -6,72 +6,61 @@ var con = mysql.createConnection({
     password: "19910917asdZX",
     database: 'paytm'
 });
-
-const listEmployees = (callback) => {
-    con.connect(function (err) {
+con.connect(function (err) {
+    if (err) return callback(err);
+    console.log("Connected!");
+});
+const query = (sql, callback) => {
+    con.query(sql, function (err, result) {
         if (err) return callback(err);
-        console.log("Connected!");
-        con.query("SELECT * FROM Employees", function (err, result, fields) {
-            if (err) callback(err);
-            console.log(result);
-            callback(null, result);
-        });
+        return callback(null, result);
     });
+}
+const listEmployees = (callback) => {
+    query(`SELECT * FROM Employees`, callback);
 };
 
 const addEmployee = (name, callback) => {
-    con.connect(function (err) {
-        if (err) return callback(err);
-        console.log("Connected!");
-        var sql = `INSERT INTO Employees (name) VALUES ('${name}')`;
-        con.query(sql, function (err, result) {
-            if (err) return callback(err);
-            return callback(null, "1 record inserted");
-            // console.log("1 record inserted");
-        });
-    });
+    const sql = `INSERT INTO Employees (name) VALUES ('${name}')`;
+    query(sql, callback);
 };
 
 const retrieveEmployee = (name, callback) => {
-    con.connect(function (err) {
-        if (err) return callback(err);
-        console.log("Connected!");
-        var sql = `SELECT * FROM Employees WHERE Name = '${name}'`;
-        con.query(sql, function (err, result) {
-            if (err) return callback(err);
-            return callback(null, result);
-            // console.log("1 record inserted");
-        });
-    });
+    const sql = `SELECT * FROM Employees WHERE Name = '${name}'`;
+    query(sql, callback);
 }
 
 const updateEmployee = (id, name, callback) => {
-    con.connect(function (err) {
-        if (err) return callback(err);
-        console.log("Connected!");
-        var sql = `Update Employees set Name = '${name}' WHERE Id = '${id}'`;
-        con.query(sql, function (err, result) {
-            if (err) return callback(err);
-            return callback(null, result);
-            // console.log("1 record inserted");
-        });
-    });
+    const sql = `Update Employees set Name = '${name}' WHERE Id = '${id}'`;
+    query(sql, callback);
 }
 
 const deleteEmployee = (name, callback) => {
-    con.connect(function (err) {
-        if (err) return callback(err);
-        console.log("Connected!");
-        var sql = `Delete from Employees WHERE Name = '${name}'`;
-        con.query(sql, function (err, result) {
-            if (err) return callback(err);
-            return callback(null, result);
-            // console.log("1 record inserted");
-        });
-    });
+    const sql = `Delete from Employees WHERE Name = '${name}'`;
+    query(sql, callback);
 }
-// listEmployees((error, result) => {
-//     if (error) console.log(error);
-//     else console.log(result);
-// });
-module.exports = { listEmployees, addEmployee, retrieveEmployee, updateEmployee, deleteEmployee };
+
+const addReview = (fromId, toId, note, callback) => {
+    const sql = `Insert Into Reviews (fromId, toId, note) Values ('${fromId}','${toId}','${note}')`;
+    query(sql, callback);
+}
+
+const updateReview = (fromId, toId, note, callback) => {
+    const sql = `Update Reviews Set note = '${note}' where fromId = '${fromId}' and toId = '${toId}'`;
+    query(sql, callback);
+}
+
+const getAllReviews = (callback) => {
+    const sql = `select * from Reviews`;
+    query(sql, callback);
+}
+
+const getReviews = (fromId, callback) => {
+    const sql = `select * from Reviews where fromId = '${fromId}'`;
+    query(sql, callback);
+}
+module.exports = {
+    listEmployees, addEmployee, retrieveEmployee,
+    updateEmployee, deleteEmployee, addReview,
+    updateReview, getAllReviews, getReviews
+};
