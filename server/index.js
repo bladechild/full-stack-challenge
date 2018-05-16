@@ -2,13 +2,14 @@ const { listEmployees, addEmployee, retrieveEmployee,
     updateEmployee, deleteEmployee, addReview,
     updateReview, getAllReviews, getReviews } = require('./db');
 const express = require('express');
+const cors = require('cors')
 const app = express();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-
-const hostname = '127.0.0.1';
-const port = 8888;
+const hostname = 'localhost';
+const port = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 app.get('/listEmployees', function (req, res) {
     listEmployees((error, employees) => {
         if (error) res.send(error);
