@@ -3,6 +3,7 @@ import merge from 'lodash/merge'
 import paginate from './paginate'
 import { combineReducers } from 'redux'
 import employeeReducers from './employees';
+import reviewsReducers from './reviews';
 
 // Updates an entity cache in response to any action with response.entities.
 const entities = (state = { users: {}, repos: {} }, action) => {
@@ -50,7 +51,8 @@ const rootReducer = combineReducers({
   entities,
   pagination,
   errorMessage,
-  employees: employeeReducers
+  employees: employeeReducers,
+  reviews: reviewsReducers
 })
 
 export default rootReducer

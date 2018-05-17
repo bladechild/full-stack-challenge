@@ -62,8 +62,9 @@ app.post('/addReview', (req, res) => {
 });
 
 app.post('/updateReview', (req, res) => {
-    const { fromId, toId, note } = req.body;
-    updateReview(fromId, toId, note, (error, response) => {
+    const { id } = req.query;
+    const { note } = req.body;
+    updateReview(id, note, (error, response) => {
         if (error) res.send(error);
         else res.send(response);
     });
@@ -75,8 +76,6 @@ app.get('/getAllReviews', (req, res) => {
         else res.send(response);
     });
 });
-
-
 app.get('/getReviews', (req, res) => {
     const { fromId } = req.query;
     getReviews(fromId, (error, response) => {
@@ -87,6 +86,5 @@ app.get('/getReviews', (req, res) => {
 app.listen(port, function (error) {
     if (error) console.log(error);
     var host = hostname;
-    console.log("http://%s:%s", host, port)
-
+    console.log("http://%s:%s", host, port);
 })

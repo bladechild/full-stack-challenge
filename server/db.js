@@ -46,13 +46,17 @@ const addReview = (fromId, toId, note, callback) => {
     query(sql, callback);
 }
 
-const updateReview = (fromId, toId, note, callback) => {
-    const sql = `Update Reviews Set note = '${note}' where fromId = '${fromId}' and toId = '${toId}'`;
+const updateReview = (id, note, callback) => {
+    const sql = `Update Reviews Set note = '${note}' where id = '${id}'`;
     query(sql, callback);
 }
 
 const getAllReviews = (callback) => {
-    const sql = `select * from Reviews`;
+    const sql = `SELECT rr.id,fr.Name as 'from', te.Name as 'to',rr.note as review
+    FROM paytm.Reviews rr
+    inner join Employees fr on fr.Id = rr.fromId
+    inner join Employees te on te.Id = rr.toId
+    `;
     query(sql, callback);
 }
 
