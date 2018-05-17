@@ -27,7 +27,7 @@ app.get('/searchEmployee', function (req, res) {
     });
 });
 app.post('/addEmployee', function (req, res) {
-    console.log(req);
+    //console.log(req);
     const { name } = req.body;
     addEmployee(name, (error, response) => {
         if (error) res.send(error);
@@ -36,7 +36,7 @@ app.post('/addEmployee', function (req, res) {
 });
 
 app.post('/updateEmployee', function (req, res) {
-    console.log(req);
+    //console.log(req);
     const { id } = req.query;
     const { name } = req.body;
     updateEmployee(id, name, (error, response) => {

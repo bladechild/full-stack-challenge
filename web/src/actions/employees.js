@@ -44,3 +44,50 @@ export const addNewEmployee = (name) => (dispatch) => {
             payload: [],
         }));
 }
+export const updateEmployee = (id, name) => (dispatch) => {
+    const url = `${API_ENDPOINT}/updateEmployee?id=${id}`;
+    axios.post(url, qs.stringify({ name }))
+        .then((response) => {
+            console.log(response);
+            if (response.data.affectedRows) {
+                dispatch({
+                    type: UPDATEEMPLOYEE,
+                    payload: { Name: name, Id: id },
+                });
+            }
+            else {
+                dispatch({
+                    type: FAIL,
+                    payload: [],
+                });
+            }
+        })
+        .catch(() => dispatch({
+            type: FAIL,
+            payload: [],
+        }));
+}
+
+export const deleteEmployee = (name) => (dispatch) => {
+    const url = `${API_ENDPOINT}/deleteEmployee`;
+    axios.delete(url, { data: qs.stringify({ name }), headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+        .then((response) => {
+            console.log(response);
+            if (response.data.affectedRows) {
+                dispatch({
+                    type: DELETEEMPLOYEE,
+                    payload: { Name: name },
+                });
+            }
+            else {
+                dispatch({
+                    type: FAIL,
+                    payload: [],
+                });
+            }
+        })
+        .catch(() => dispatch({
+            type: FAIL,
+            payload: [],
+        }));
+};

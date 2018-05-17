@@ -36,6 +36,7 @@ const updateEmployee = (id, name, callback) => {
 }
 
 const deleteEmployee = (name, callback) => {
+    console.log(name);
     const sql = `Delete from Employees WHERE Name = '${name}'`;
     query(sql, callback);
 }
