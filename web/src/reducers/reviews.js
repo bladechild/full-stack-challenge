@@ -9,7 +9,7 @@ const reviewReducers = (state = [], action) => {
     if (action.type === ReviewsActions.UPDATEREVIEW) {
         return state.map((review) => {
             if (review.id === action.payload.id) {
-                review.note = action.payload.note;
+                review.review = action.payload.note;
             }
             return review;
         });

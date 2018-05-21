@@ -5,14 +5,14 @@ export const FAIL = 'Fail Operation';
 export const ADDREVIEW = 'Add new review';
 export const UPDATEREVIEW = 'Update existed review';
 const API_ENDPOINT = 'http://localhost:3000';
-export const addReview = (fromId, toId, note) => (dispatch) => {
+export const addReview = (fromId, fromName, toId, toName, note) => (dispatch) => {
     const url = `${API_ENDPOINT}/addReview`;
     axios.post(url, qs.stringify({ fromId, toId, note }))
         .then((response) => {
             if (response.data.insertId) {
                 dispatch({
                     type: ADDREVIEW,
-                    payload: { id: response.data.insertId, fromId, toId, note },
+                    payload: { id: response.data.insertId, from: fromName, to: toName, note },
                 });
             }
             else {
@@ -42,8 +42,8 @@ export const listReviews = () => (dispatch) => {
         }));
 }
 export const updateReview = (id, note) => (dispatch) => {
-    const url = `${API_ENDPOINT}/updateReview`;
-    axios.post(url, qs.stringify({ id, note }))
+    const url = `${API_ENDPOINT}/updateReview?id=${id}`;
+    axios.post(url, qs.stringify({ note }))
         .then((response) => {
             dispatch({
                 type: UPDATEREVIEW,
