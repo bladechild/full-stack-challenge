@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from "qs";
 export const GETALLREVIEWS = 'Get all reviews';
+export const GETEMPLOYEEREVIEWREQUEST = 'Get employee review request';
 export const FAIL = 'Fail Operation';
 export const ADDREVIEW = 'Add new review';
 export const UPDATEREVIEW = 'Update existed review';
@@ -53,5 +54,19 @@ export const updateReview = (id, note) => (dispatch) => {
         .catch(() => dispatch({
             type: FAIL,
             payload: null,
+        }));
+}
+export const listEmployeeReviews = () => (dispatch) => {
+    const url = `${API_ENDPOINT}/getReviews`;
+    axios.get(url)
+        .then((response) => {
+            dispatch({
+                type: GETEMPLOYEEREVIEWREQUEST,
+                payload: response.data,
+            });
+        })
+        .catch(() => dispatch({
+            type: FAIL,
+            payload: [],
         }));
 }

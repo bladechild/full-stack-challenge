@@ -14,6 +14,9 @@ const reviewReducers = (state = [], action) => {
             return review;
         });
     }
+    if (action.type === ReviewsActions.GETEMPLOYEEREVIEWREQUEST) {
+        return action.payload;
+    }
     return state;
 }
 export default reviewReducers;
