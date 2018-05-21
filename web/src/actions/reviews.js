@@ -56,8 +56,8 @@ export const updateReview = (id, note) => (dispatch) => {
             payload: null,
         }));
 }
-export const listEmployeeReviews = () => (dispatch) => {
-    const url = `${API_ENDPOINT}/getReviews`;
+export const listEmployeeReviews = (id) => (dispatch) => {
+    const url = `${API_ENDPOINT}/getReviews?fromId=${id}`;
     axios.get(url)
         .then((response) => {
             dispatch({

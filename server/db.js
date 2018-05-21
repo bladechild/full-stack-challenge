@@ -61,7 +61,11 @@ const getAllReviews = (callback) => {
 }
 
 const getReviews = (fromId, callback) => {
-    const sql = `select * from Reviews where fromId = '${fromId}'`;
+    const sql = `SELECT rr.id,fr.Name as 'from', te.Name as 'to',rr.note as review
+    FROM paytm.Reviews rr
+    inner join Employees fr on fr.Id = rr.fromId
+    inner join Employees te on te.Id = rr.toId
+    where rr.fromId = '${fromId}'`;
     query(sql, callback);
 }
 module.exports = {
