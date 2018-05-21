@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { ButtonToolbar, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import {  FormGroup, FormControl } from 'react-bootstrap'
 class DropdownList extends Component {
-    constructor(props) {
-        super(props);
-    }
     handleChange(event) {
         const index = event.target.selectedIndex;
         const text = event.target[index].text;
